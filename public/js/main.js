@@ -5,6 +5,6 @@
 		Module:"Module"
 	})	
 	define(["Game","Render","Module"],function(Game,Render,Module){
-		
+		var render = new Render();
 	})
 })
