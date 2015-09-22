@@ -11,7 +11,7 @@ define([],function(){
 		var cells = this._module.getCells();//获取列数
 		var circels = cells * cells;//总的圆个数
 		var nums = Math.round(Math.random() * circels * 0.3);
-		if(nums < 6){
+		if(nums < circels / 4){
 			return this._getFullNums();
 		}
 		return nums;
@@ -51,7 +51,7 @@ define([],function(){
 			x : this._getUnderCellsNum(),
 			y : this._getUnderCellsNum()
 		}
-		if(!this._arrIndex(arr,obj)){
+		if(!this._arrIndex(arr,obj) && !this._isCatPos(obj)){
 			return obj;
 		}
 		else{
@@ -70,6 +70,18 @@ define([],function(){
 			if(arr[i].x == obj.x && arr[i].y == obj.y){
 				return true;
 			}
+		}
+		return false;
+	}
+	/**
+	 * 生成的随机位置不能是猫的位置
+	 * @param  {[type]}  obj [description]
+	 * @return {Boolean}     [description]
+	 */
+	_p._isCatPos = function(obj){
+		var catPos = this._module.getCatPoint();
+		if(obj.x == catPos.x && obj.y == catPos.y){
+			return true;
 		}
 		return false;
 	}

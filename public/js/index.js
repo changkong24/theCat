@@ -12,7 +12,6 @@ define(["Game"],function(Game){
 		this._canvas = this._initFullScreenCanvas(canvasID);
 		this._ctx = this._canvas.getContext("2d");
 		this._game = new Game(this._canvas);
-		this.init();
 	}
 
 	_p = Cat.prototype;//原型
@@ -22,21 +21,21 @@ define(["Game"],function(Game){
 	 */
 	_p.init = function(){
 		var that = this;
-		if(isTouchDevice()){
-			this._canvas.addEventListener("touchstart",function(e){
-				var touch = event.targetTouches[0];
-				that._game.handleClick(touch.pageX,touch.pageY);
-				e.stopPropagation();
-				e.preventDefault();
-			},false);
-		}
-		else{
+		// if(isTouchDevice()){
+		// 	this._canvas.addEventListener("touchend",function(e){
+		// 		var touch = event.targetTouches[0];
+		// 		that._game.handleClick(touch.pageX,touch.pageY);
+		// 		e.stopPropagation();
+		// 		e.preventDefault();
+		// 	},false);
+		// }
+		// else{
 			this._canvas.addEventListener("mouseup",function(e){
 				that._game.handleClick(e.pageX,e.pageY);
 				e.stopPropagation();
 				e.preventDefault();
 			})
-		}
+		// }
 	}
 	/**
 	 * 初始化canvas

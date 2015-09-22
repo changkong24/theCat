@@ -1,17 +1,35 @@
 {
   "name": "theCat",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "围住神经猫",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "body-parser": "~1.13.2",
-    "cookie-parser": "~1.3.5",
-    "debug": "~2.2.0",
-    "express": "~4.13.1",
-    "jade": "~1.11.0",
-    "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0"
-  }
+    "body-parser": "^1.13.3",
+    "cookie-parser": "^1.3.5",
+    "debug": "^2.2.0",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "jade": "^1.11.0",
+    "morgan": "^1.6.1",
+    "serve-favicon": "^2.3.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/changkong24/theCat.git"
+  },
+  "keywords": [
+    "围住神经猫",
+    "h5",
+    "nodejs"
+  ],
+  "author": "xuyang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/changkong24/theCat/issues"
+  },
+  "homepage": "https://github.com/changkong24/theCat"
 }

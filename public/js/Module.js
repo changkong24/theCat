@@ -12,15 +12,20 @@ define([],function(){
 			x : 4,
 			y : 4
 		}//神经猫的位置
+		this._catNode = null;//神经猫的树节点
 		this._fullNums = 0;
+		this._cover = false;//猫是否被围住
+		this._step = 0;//步数
+		this._isWin = false;//是否胜利
 	}
 	var _p = Module.prototype;
 
 	Module.LOADING = 0;//加载中
 	Module.START = 1;//开始游戏
 	Module.PLAYING = 2;//游戏中
-	Module.PAUSE = 3;//暂停中
-	Module.GAMEOVER = 4;//游戏结束
+	Module.COVER = 3;//游戏中
+	Module.PAUSE = 4;//暂停中
+	Module.GAMEOVER = 5;//游戏结束
 
 	Module.EMPTY = 0;//可点点位
 	Module.FULL = 1;//已点点位
@@ -36,8 +41,7 @@ define([],function(){
 			for(var j = 0;j < this._cells;j ++){
 				this._data[i][j] = {
 					val : Module.EMPTY,
-					img : null,
-					len : Module.MAX 
+					img : null
 				}
 				
 			}
@@ -122,21 +126,6 @@ define([],function(){
 		return this._catPoint;
 	}
 	/**
-	 * 设置权值
-	 */
-	_p.setDataLen = function(len,i,j){
-		this._data[i][j].len = len;
-	}
-	/**
-	 * 获取第i行第j列的权值
-	 * @param  {[type]} i [description]
-	 * @param  {[type]} j [description]
-	 * @return {[type]}   [description]
-	 */
-	_p.getDataLen = function(i,j){
-		return this._data[i][j].len;
-	}
-	/**
 	 * 设置个数
 	 * @param {[type]} num [description]
 	 */
@@ -149,6 +138,62 @@ define([],function(){
 	 */
 	_p.getFullNums = function(){
 		return this._fullNums;
+	}
+	/**
+	 * 设置猫节点
+	 * @param {[type]} node [description]
+	 */
+	_p.setCatNode = function(node){
+		this._catNode = node;
+	}
+	/**
+	 * 获取猫节点
+	 * @return {[type]} [description]
+	 */
+	_p.getCatNode = function(){
+		return this._catNode;
+	}
+	/**
+	 * 设置是否被围住
+	 * @param {[type]} bool [description]
+	 */
+	_p.setCover = function(bool){
+		this._cover = bool;
+	}
+	/**
+	 * 获取是否被围住
+	 * @return {[type]} [description]
+	 */
+	_p.getCover = function(){
+		return this._cover;
+	}
+	/**
+	 * 游戏步数
+	 * 每次增加一步
+	 */
+	_p.setStep = function(){
+		this._step++;
+	}
+	/**
+	 * 获取当前的游戏步数
+	 * @return {[type]} [description]
+	 */
+	_p.getStep = function (){
+		return this._step;
+	}
+	/**
+	 * 设置是否胜利
+	 * @param {[type]} flag [description]
+	 */
+	_p.setWin = function(flag){
+		this._isWin = flag;
+	}
+	/**
+	 * 获取是否胜利
+	 * @return {[type]} [description]
+	 */
+	_p.getWin = function (){
+		return this._isWin;
 	}
 	return Module;
 })
