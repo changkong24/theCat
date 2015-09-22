@@ -21,21 +21,22 @@ define(["Game"],function(Game){
 	 */
 	_p.init = function(){
 		var that = this;
-		// if(isTouchDevice()){
-		// 	this._canvas.addEventListener("touchend",function(e){
-		// 		var touch = event.targetTouches[0];
-		// 		that._game.handleClick(touch.pageX,touch.pageY);
-		// 		e.stopPropagation();
-		// 		e.preventDefault();
-		// 	},false);
-		// }
-		// else{
+		if(isTouchDevice()){
+			this._canvas.addEventListener("touchend",function(e){
+				var touch = event.targetTouches[0];
+				that._game.handleClick(touch.pageX,touch.pageY);
+				e.stopPropagation();
+				e.preventDefault();
+			},false);
+		}
+		else{
 			this._canvas.addEventListener("mouseup",function(e){
-				that._game.handleClick(e.pageX,e.pageY);
+				var x = e.pageX - that._canvas.offsetLeft;
+				that._game.handleClick(x,e.pageY);
 				e.stopPropagation();
 				e.preventDefault();
 			})
-		// }
+		}
 	}
 	/**
 	 * 初始化canvas
@@ -57,7 +58,8 @@ define(["Game"],function(Game){
 	function resizeCanvas(canvas){
 		canvas.width = document.width || document.body.clientWidth;
 		canvas.height = document.height || document.body.clientHeight;
-		
+		canvas.width = canvas.width > 480 ? 480 : canvas.width;
+		canvas.height = canvas.height > 720 ? 720 : canvas.height;
 	}
 	/**
 	 * 判断是否是移动网页
