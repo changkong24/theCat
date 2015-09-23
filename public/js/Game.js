@@ -120,15 +120,18 @@ define(["Renderer","Module","Resource","Random","Graph"],function(Renderer,Modul
 				//被围住
 				this._module.setCover(true);//猫被围住了
 				this._module.setStuats(Module.COVER);
-				this._refreshCatPos(this._getCoverPath().minPath);//更新猫的位置
-			}
-			else if(status.status == Module.GAMEOVER){
-				if(this._module.getCover()){
+				var newStatus = this._getCoverPath();
+				if(newStatus.status == Module.GAMEOVER){//一步围住
+					this._module.setStuats(Module.GAMEOVER);
 					this._module.setWin(true);
+					this._render.draw_gameOver();
 				}
 				else{
-					this._module.setWin(false);
+					this._refreshCatPos(newStatus.minPath);//更新猫的位置
 				}
+			}
+			else if(status.status == Module.GAMEOVER){
+				this._module.setWin(true);
 				this._module.setStuats(Module.GAMEOVER);
 				this._render.draw_gameOver();
 			}
