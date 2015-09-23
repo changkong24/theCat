@@ -18,7 +18,13 @@ define(["Module","Resource"],function(Module,Resource){
 	}
 
 	_p = Renderer.prototype;//原型
-
+	/**
+	 * 停止计时器
+	 * @return {[type]} [description]
+	 */
+	_p.clear = function(){
+		clearInterval(this._catInterval);
+	}
 	/**
 	 * 加载中
 	 * @return {[type]} [description]
@@ -69,7 +75,10 @@ define(["Module","Resource"],function(Module,Resource){
 				this.draw_circles(val,i,j);
 			}
 		}
-		this._drawCat(this._module.getCatPoint().x,this._module.getCatPoint().y);
+		if(this._module.getStatus() != Module.START && this._module.getStatus() != Module.LOADING){
+			//开始状态不绘猫
+			this._drawCat(this._module.getCatPoint().x,this._module.getCatPoint().y);
+		}
 		this._ctx.restore();
 	}	
 	/**
@@ -93,14 +102,6 @@ define(["Module","Resource"],function(Module,Resource){
 		x = j % 2 == 0 ? x : x + radius;
 		var y = j * radius * 2 - 4;
 		ctx.drawImage(img,0,0,img.width,img.height,x,y,radius * 2,radius * 2);
-
-		// //绘制猫
-		// var catPos = this._module.getCatPoint();
-		// if(i == catPos.x && j == catPos.y ){
-		// 	//绘猫
-		// 	this._drawCat(x,y);
-		// }	
-
 	}
 	/**
 	 * 画那只猫
@@ -236,19 +237,28 @@ define(["Module","Resource"],function(Module,Resource){
 		var ctx = this._ctx;
 		var step = this._module.getStep();
 		var imgOver = this._module.getWin() ? Resource.IMAGES[10].img : Resource.IMAGES[2].img,imgShare = Resource.IMAGES[6].img,imgReplay = Resource.IMAGES[5].img,imgMore = Resource.IMAGES[4].img;
-		var txt = this._module.getWin()?"你用"+step+"步围住了死猫" : "你用了"+step+"步让飞了！渣渣！"
-		ctx.save();
 		var width = this._canvas.width * 0.9;
 		var height = this._canvas.height * 0.5;
 		ctx.drawImage(imgOver,0,0,imgOver.width,imgOver.height,this._canvas.width * 0.05,this._canvas.height * 0.15,width,imgOver.height * width / imgOver.width);
+		ctx.drawImage(imgShare,0,0,imgShare.width,imgShare.height,this._canvas.width * 0.05 ,this._canvas.height * 0.65 + 10,(width/2 - 10),imgShare.height * (width/2 -10) / imgShare.width);//分享按钮
+		ctx.drawImage(imgReplay,0,0,imgReplay.width,imgReplay.height, this._canvas.width * 0.05 + width - (width/2 - 10),this._canvas.height * 0.65 + 10,(width/2 - 10),imgReplay.height *(width/2 - 10)/imgReplay.width );//重新游戏按钮
+		ctx.drawImage(imgMore,0,0,imgMore.width,imgMore.height,this._canvas.width * 0.05,this._canvas.height - imgMore.height * (width / imgMore.width) ,width,imgMore.height * (width / imgMore.width));//更多
+		this._draw_gameoverTxt(imgOver.width,imgOver.height,step,ctx);//文本
+	}
+	/**
+	 * 绘制结束的文本
+	 * @param  {[type]} width  [description]
+	 * @param  {[type]} height [description]
+	 * @return {[type]}        [description]
+	 */
+	_p._draw_gameoverTxt = function(width,height,step,ctx){
+		var txt = this._module.getWin()?"你用"+step+"步围住了死猫" : "你用了"+step+"步让猫飞了"
+		ctx.save();
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
-		ctx.font="24px";
+		ctx.font = "24px fontawesome";
 		ctx.fillStyle = "red";
-		ctx.fillText(txt,this._canvas.width / 2,this._canvas.height * 0.15 + imgOver.height * width / imgOver.width * 0.6);
-		ctx.drawImage(imgShare,0,0,imgShare.width,imgShare.height,this._canvas.width * 0.05 ,this._canvas.height * 0.65 + 10,(width/2 - 10),imgShare.height * (width/2 -10) / imgShare.width);//分享按钮
-		ctx.drawImage(imgReplay,0,0,imgReplay.width,imgReplay.height, this._canvas.width * 0.05 + width - (width/2 - 10),this._canvas.height * 0.65 + 10,(width/2 - 10),imgShare.height *(width/2 - 10)/imgReplay.width );//重新游戏按钮
-		ctx.drawImage(imgMore,0,0,imgMore.width,imgMore.height,this._canvas.width * 0.05,this._canvas.height - imgMore.height * (width / imgMore.width) ,width,imgMore.height * (width / imgMore.width));//更多
+		ctx.fillText(txt,this._canvas.width / 2,this._canvas.height * 0.15 + height * this._canvas.width * 0.9 / height * 0.4);
 		ctx.restore();
 	}
 	return Renderer;

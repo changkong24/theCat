@@ -58,8 +58,8 @@ define(["Game"],function(Game){
 	function resizeCanvas(canvas){
 		canvas.width = document.width || document.body.clientWidth;
 		canvas.height = document.height || document.body.clientHeight;
-		canvas.width = canvas.width > 480 ? 480 : canvas.width;
-		canvas.height = canvas.height > 720 ? 720 : canvas.height;
+		canvas.width = canvas.width > 640 ? 640 : canvas.width;
+		canvas.height = canvas.height > 960 ? 960 : canvas.height;
 	}
 	/**
 	 * 判断是否是移动网页
