@@ -22,7 +22,7 @@ define(["Game"],function(Game){
 	_p.init = function(){
 		var that = this;
 		if(isTouchDevice()){
-			this._canvas.addEventListener("touchend",function(e){
+			this._canvas.addEventListener("touchstart",function(e){
 				var touch = event.targetTouches[0];
 				that._game.handleClick(touch.pageX,touch.pageY);
 				e.stopPropagation();
